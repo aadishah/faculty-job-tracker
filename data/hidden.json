@@ -1,0 +1,148 @@
+[
+ {
+  "key": "wu:f823c2e3771dd155",
+  "source": "Whose University?",
+  "sector": "Central",
+  "institution": "Indian Institute of Technology Goa",
+  "title": "Advertisement for Assistant Professor Position in the School of Humanities and Social Sciences",
+  "rank": "Assistant Professor",
+  "match": "broad",
+  "matched": [
+   "social science"
+  ],
+  "closing_date": null,
+  "posts": null,
+  "url": "https://iitgoa.ac.in/wp-content/uploads/Advt-AP-SHSS-July-2023.pdf",
+  "apply_url": null,
+  "note": "Goa",
+  "rolling": false,
+  "ad_date": "2023-07-11",
+  "hidden_reason": "closed on 01 Aug 2023"
+ },
+ {
+  "key": "wu:068feeae33b92720",
+  "source": "Whose University?",
+  "sector": "Central",
+  "institution": "National Law School of India University",
+  "title": "Call for Applications | Assistant Professor (Social Sciences) – 2-year Contract | 2 Positions",
+  "rank": "Assistant Professor",
+  "match": "mention",
+  "matched": [
+   "anthropolog",
+   "sociolog"
+  ],
+  "closing_date": null,
+  "posts": null,
+  "url": "https://www.nls.ac.in/news-events/call-for-applications-assistant-professor-social-sciences-2-year-contract-2-positions/",
+  "apply_url": "https://www.nls.ac.in/news-events/call-for-applications-assistant-professor-social-sciences-2-year-contract-2-positions/",
+  "note": "Karnataka",
+  "rolling": false,
+  "hidden_reason": "closed on 16 Sep 2026"
+ },
+ {
+  "key": "wu:c21c86875331d471",
+  "source": "Whose University?",
+  "sector": "Central",
+  "institution": "National Law School of India University",
+  "title": "Call for Applications | Assistant Professor of Law – 16 Positions Open across Law and Social Sciences",
+  "rank": "Assistant Professor",
+  "match": "mention",
+  "matched": [
+   "sociolog"
+  ],
+  "closing_date": null,
+  "posts": null,
+  "url": "https://www.nls.ac.in/news-events/call-for-applications-assistant-professor-of-law-16-positions-open-across-law-and-social-sciences/",
+  "apply_url": "https://www.nls.ac.in/news-events/call-for-applications-assistant-professor-of-law-16-positions-open-across-law-and-social-sciences/",
+  "note": "Karnataka",
+  "rolling": false,
+  "hidden_reason": "closed on 28 Mar 2024"
+ },
+ {
+  "key": "watch:panjab-university:f3f13aaf6910c0d0",
+  "source": "Watch list",
+  "sector": "State",
+  "institution": "Panjab University",
+  "title": "Applications are invited for 01 Guest faculty (Assistant Professor)",
+  "rank": "Assistant Professor",
+  "match": "notice",
+  "matched": [],
+  "closing_date": null,
+  "posts": null,
+  "url": "https://jobs.puchd.ac.in/includes/jobs/2026/20261028113235-Guest Faculty-Adv 2026-2.pdf",
+  "apply_url": null,
+  "note": "Chandigarh",
+  "ad_date": "2026-10-27",
+  "hidden_reason": "closed on 05 Nov 2026"
+ },
+ {
+  "key": "watch:university-of-kashmir:cd1978bd42d01a73",
+  "source": "Watch list",
+  "sector": "State",
+  "institution": "University of Kashmir",
+  "title": "Advertisement Notice for the Post of Assistant Professor – Notice No. 17 of 2026",
+  "rank": "Assistant Professor",
+  "match": "mention",
+  "matched": [
+   "sociolog"
+  ],
+  "closing_date": null,
+  "posts": null,
+  "url": "https://www.kashmiruniversity.net/jobs/3095.pdf",
+  "apply_url": null,
+  "note": "Jammu & Kashmir",
+  "ad_date": "2026-08-06",
+  "hidden_reason": "closed on 14 Sep 2026"
+ },
+ {
+  "key": "watch:university-of-kashmir:cd72602261c77099",
+  "source": "Watch list",
+  "sector": "State",
+  "institution": "University of Kashmir",
+  "title": "Brief Advertisement Notice for the Post of Assistant Professor – Notice No. 17 of 2026",
+  "rank": "Assistant Professor",
+  "match": "notice",
+  "matched": [],
+  "closing_date": null,
+  "posts": null,
+  "url": "https://www.kashmiruniversity.net/jobs/3094.pdf",
+  "apply_url": null,
+  "note": "Jammu & Kashmir",
+  "ad_date": "2026-08-06",
+  "hidden_reason": "closed on 14 Sep 2026"
+ },
+ {
+  "key": "watch:university-of-calicut:24643af22d09c18d",
+  "source": "Watch list",
+  "sector": "State",
+  "institution": "University of Calicut",
+  "title": "Online applications are invited for preparing ranklist for the post of Assistant Professor on contract in Social Science in the Calicut University Teacher Education Centres 23-10-2026",
+  "rank": "Assistant Professor",
+  "match": "broad",
+  "matched": [
+   "social science"
+  ],
+  "closing_date": null,
+  "posts": null,
+  "url": "https://docs.uoc.ac.in/website/vacancies/2026-10-12%2015:36:27_vac2126.pdf",
+  "apply_url": null,
+  "note": "Kerala",
+  "hidden_reason": "closed on 23 Oct 2026"
+ },
+ {
+  "key": "watch:university-of-mumbai:7251caa5c4fb277c",
+  "source": "Watch list",
+  "sector": "State",
+  "institution": "University of Mumbai",
+  "title": "CORRIGENDUM TO THE ADVERTISEMENT FOR THE VARIOUS 152 AIDED TEACHING POSITIONS - No.AAQA/2026/FEB/25889",
+  "rank": "Faculty (rank not stated)",
+  "match": "notice",
+  "matched": [],
+  "closing_date": null,
+  "posts": null,
+  "url": "https://mu.ac.in/admin/upload/notice/57629CORRIGENDUM.pdf",
+  "apply_url": null,
+  "note": "Maharashtra",
+  "hidden_reason": "closed on 12 Mar 2026"
+ }
+]
