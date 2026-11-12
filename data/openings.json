@@ -1,0 +1,124 @@
+[
+ {
+  "key": "curec:25d4926e5ee26978",
+  "source": "UGC CU-REC",
+  "institution": "University of Hyderabad",
+  "title": "Assistant Professor — Department of Anthropology",
+  "department": "Department of Anthropology",
+  "rank": "Assistant Professor",
+  "match": "strong",
+  "matched": [
+   "anthropolog"
+  ],
+  "closing_date": "2026-11-16",
+  "posts": 1,
+  "url": "https://curec.samarth.ac.in/index.php/search/site/search",
+  "apply_url": null,
+  "note": "Advt UH/Rectt./Teaching/2026-02 dated 07-09-2026 · Post AN · Permanent · Telangana",
+  "first_seen": "2026-11-12"
+ },
+ {
+  "key": "wu:856137750400e0e4",
+  "source": "Whose University?",
+  "institution": "FLAME University",
+  "title": "Assistant Professor in Sociology",
+  "department": "School of Liberal Education",
+  "rank": "Assistant Professor",
+  "match": "strong",
+  "matched": [
+   "sociolog"
+  ],
+  "closing_date": null,
+  "posts": null,
+  "url": "https://jobs.flame.edu.in/FLAME_Current_Jobs_page",
+  "apply_url": "https://jobs.flame.edu.in/FLAME_Current_Jobs_page",
+  "first_seen": "2026-11-12"
+ },
+ {
+  "key": "wu:f823c2e3771dd155",
+  "source": "Whose University?",
+  "institution": "Indian Institute of Technology Goa",
+  "title": "Advertisement for Assistant Professor Position in the School of Humanities and Social Sciences",
+  "department": "",
+  "rank": "Assistant Professor",
+  "match": "broad",
+  "matched": [
+   "social science"
+  ],
+  "closing_date": null,
+  "posts": null,
+  "url": "https://iitgoa.ac.in/wp-content/uploads/Advt-AP-SHSS-July-2023.pdf",
+  "apply_url": null,
+  "first_seen": "2026-11-12"
+ },
+ {
+  "key": "wu:a54d8488871bd858",
+  "source": "Whose University?",
+  "institution": "Indian Institute of Technology Kanpur",
+  "title": "Faculty — Humanities and Social Sciences",
+  "department": "Humanities and Social Sciences",
+  "rank": "Faculty (rank not stated)",
+  "match": "broad",
+  "matched": [
+   "social science"
+  ],
+  "closing_date": null,
+  "posts": null,
+  "url": "https://iitk.ac.in/dofa/department-wise-vacancies-and-area-of-specialization",
+  "apply_url": "https://iitk.ac.in/dofa/online-application-form",
+  "first_seen": "2026-11-12"
+ },
+ {
+  "key": "wu:068feeae33b92720",
+  "source": "Whose University?",
+  "institution": "National Law School of India University",
+  "title": "Call for Applications | Assistant Professor (Social Sciences) – 2-year Contract | 2 Positions",
+  "department": "",
+  "rank": "Assistant Professor",
+  "match": "broad",
+  "matched": [
+   "social science"
+  ],
+  "closing_date": null,
+  "posts": null,
+  "url": "https://www.nls.ac.in/news-events/call-for-applications-assistant-professor-social-sciences-2-year-contract-2-positions/",
+  "apply_url": "https://www.nls.ac.in/news-events/call-for-applications-assistant-professor-social-sciences-2-year-contract-2-positions/",
+  "first_seen": "2026-11-12"
+ },
+ {
+  "key": "wu:c21c86875331d471",
+  "source": "Whose University?",
+  "institution": "National Law School of India University",
+  "title": "Call for Applications | Assistant Professor of Law – 16 Positions Open across Law and Social Sciences",
+  "department": "",
+  "rank": "Assistant Professor",
+  "match": "broad",
+  "matched": [
+   "social science"
+  ],
+  "closing_date": null,
+  "posts": null,
+  "url": "https://www.nls.ac.in/news-events/call-for-applications-assistant-professor-of-law-16-positions-open-across-law-and-social-sciences/",
+  "apply_url": "https://www.nls.ac.in/news-events/call-for-applications-assistant-professor-of-law-16-positions-open-across-law-and-social-sciences/",
+  "first_seen": "2026-11-12"
+ },
+ {
+  "key": "wu:5718355b1efa5d6b",
+  "source": "Whose University?",
+  "institution": "FLAME University",
+  "title": "Literary and Cultural Studies, especially those",
+  "department": "School of Liberal Education",
+  "rank": "Faculty (rank not stated)",
+  "match": "mention",
+  "matched": [
+   "anthropolog",
+   "gender and",
+   "sociolog"
+  ],
+  "closing_date": null,
+  "posts": null,
+  "url": "https://jobs.flame.edu.in/FLAME_Current_Jobs_page",
+  "apply_url": "https://jobs.flame.edu.in/FLAME_Current_Jobs_page",
+  "first_seen": "2026-11-12"
+ }
+]

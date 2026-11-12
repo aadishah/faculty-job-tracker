@@ -1,0 +1,23 @@
+{
+  "rank": "Assistant Professor",
+  "strong_keywords": [
+    "sociolog",
+    "anthropolog",
+    "women'?s stud",
+    "women stud",
+    "gender stud",
+    "gender and|gender &",
+    "feminis"
+  ],
+  "broad_keywords": [
+    "social science",
+    "social inclusion",
+    "social systems"
+  ],
+  "exclude_keywords": [],
+  "new_badge_days": 7,
+  "sources": {
+    "whoseuniversity": true,
+    "curec": true
+  }
+}
