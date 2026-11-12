@@ -19,7 +19,9 @@ import datetime as dt
 import hashlib
 import html
 import http.cookiejar
+import io
 import json
+import logging
 import os
 import re
 import smtplib
@@ -29,7 +31,13 @@ import urllib.request
 from email.message import EmailMessage
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent
+try:  # optional: lets the tracker read dates and subjects inside PDF ads
+    import pypdf
+    logging.getLogger("pypdf").setLevel(logging.CRITICAL)
+except ImportError:
+    pypdf = None
+
+ROOT =Path(__file__).resolve().parent
 DATA = ROOT / "data"
 DOCS = ROOT / "docs"
 UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) faculty-job-tracker (personal use)"
@@ -85,10 +93,15 @@ def load_json(path, default):
         return default
 
 
-def fetch(url, opener=None, data=None, headers=None, timeout=60):
+def fetch_bytes(url, opener=None, data=None, headers=None, timeout=60, limit=None):
+    url = urllib.parse.quote(url, safe=":/?&=%#+~@!$,;'()*[]")  # some sites link to URLs with spaces
     req = urllib.request.Request(url, data=data, headers=dict({"User-Agent": UA}, **(headers or {})))
     resp = (opener.open if opener else urllib.request.urlopen)(req, timeout=timeout)
-    return resp.read().decode("utf-8", "replace")
+    return resp.read(limit) if limit else resp.read()
+
+
+def fetch(url, opener=None, data=None, headers=None, timeout=60):
+    return fetch_bytes(url, opener, data, headers, timeout).decode("utf-8", "replace")
 
 
 def parse_date(value):
@@ -189,6 +202,7 @@ def source_whoseuniversity(matcher):
             "url": ad.get("original_url") or ad.get("info_url") or WU,
             "apply_url": ad.get("apply_url"),
             "note": inst.get("state") or "",
+            "rolling": ad.get("closing_date_status") == "rolling",
         })
     return out, "feed dated " + str(feed.get("generated_at", ""))[:10]
 
@@ -338,6 +352,135 @@ def source_watch(matcher, cfg, seen, previous):
     return out, info
 
 
+# ---------- reading the ads themselves ----------
+
+_MON = "jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec"
+MONTHS = {m: i for i, m in enumerate(_MON.split("|"), 1)}
+DATE_RX = re.compile(
+    r"\b(\d{1,2})(?:st|nd|rd|th)?[\s,]*(%s)[a-z]*\.?,?\s*(20\d\d)\b"      # 1 August 2023
+    r"|\b(%s)[a-z]*\.?\s+(\d{1,2})(?:st|nd|rd|th)?,?\s*(20\d\d)\b"        # August 1, 2023
+    r"|\b(\d{1,2})\s*[-./]\s*(\d{1,2})\s*[-./]\s*(20\d\d)\b"              # 09-09-2026
+    r"|\b(20\d\d)-(\d{2})-(\d{2})\b" % (_MON, _MON),                       # 2026-09-09
+    re.I,
+)
+DEADLINE_RX = re.compile(
+    r"last\s+date|closing\s+date|deadline|on\s+or\s+before|apply\s+by|due\s+date|latest\s+by|"
+    r"extended\s+(?:up\s*to|till|until|to)",
+    re.I,
+)
+AD_DATE_RX = re.compile(r"date\s+of\s+(?:the\s+)?advertisement|dated?\s*[:.]", re.I)
+ROLLING_RX = re.compile(r"rolling\s+(advertisement|basis|call)|throughout\s+the\s+year|no\s+last\s+date", re.I)
+
+
+def first_date(text):
+    for m in DATE_RX.finditer(text):
+        g = m.groups()
+        try:
+            if g[0]:
+                return dt.date(int(g[2]), MONTHS[g[1].lower()], int(g[0]))
+            if g[3]:
+                return dt.date(int(g[5]), MONTHS[g[3].lower()], int(g[4]))
+            if g[6]:
+                return dt.date(int(g[8]), int(g[7]), int(g[6]))
+            return dt.date(int(g[9]), int(g[10]), int(g[11]))
+        except ValueError:
+            continue
+    return None
+
+
+def read_ad(url, matcher):
+    """Download one ad and pull out its deadline, its date and whether it names our subjects."""
+    raw = fetch_bytes(url, timeout=40, limit=12_000_000)
+    is_pdf = raw[:5] == b"%PDF-"
+    if is_pdf:
+        if pypdf is None:
+            return {"ok": False, "pdf": True, "why": "pypdf not installed"}
+        pages = pypdf.PdfReader(io.BytesIO(raw)).pages[:15]
+        text = " ".join(p.extract_text() or "" for p in pages)
+    else:
+        text = re.sub(r"<(script|style)\b.*?</\1>", " ", raw.decode("utf-8", "replace"), flags=re.S | re.I)
+    text = clean(text)
+    info = {"ok": True, "pdf": is_pdf, "chars": len(text)}
+    if len(text) < 200 or (not is_pdf and len(text) > 15000):
+        return info  # a scanned image, or a long page listing many jobs: nothing reliable to read
+    deadlines = [first_date(text[m.end():m.end() + 110]) for m in DEADLINE_RX.finditer(text)]
+    deadlines = [d for d in deadlines if d]
+    advertised = AD_DATE_RX.search(text[:2000])
+    advertised = first_date(text[advertised.end():advertised.end() + 40]) if advertised else None
+    level, words = matcher.discipline(text)
+    info.update({
+        "deadline": max(deadlines).isoformat() if deadlines else None,
+        "ad_date": advertised.isoformat() if advertised else None,
+        "rolling": bool(ROLLING_RX.search(text)),
+        "keywords": words if level == "strong" else [],
+    })
+    return info
+
+
+def scan_ads(openings, cfg, matcher, cache):
+    """Open each ad that has no known deadline, then hide the ones that have closed
+    or are clearly out of date. Results are cached so each ad is read only once."""
+    listing_pages = {CUREC_BROWSE, WU, WU + "/"} | {e["url"] for e in cfg.get("watch") or []}
+
+    def due(url):
+        entry = cache.get(url)
+        if not entry:
+            return True
+        age = (TODAY - (parse_date(entry.get("checked", "")) or TODAY)).days
+        if not entry.get("ok"):
+            return age >= 2
+        return not entry.get("pdf") and age >= 7  # PDFs never change; web pages can
+
+    todo = []
+    for o in openings:
+        url = o.get("url") or ""
+        if not o.get("closing_date") and url.startswith("http") and url not in listing_pages and due(url):
+            if url not in todo:
+                todo.append(url)
+
+    def work(url):
+        try:
+            return url, read_ad(url, matcher)
+        except Exception as exc:
+            return url, {"ok": False, "why": str(exc)[:60]}
+
+    with concurrent.futures.ThreadPoolExecutor(6) as pool:
+        for url, info in pool.map(work, todo[:60]):
+            info["checked"] = TODAY.isoformat()
+            cache[url] = info
+
+    shown, hidden, read = [], [], 0
+    for o in openings:
+        info = cache.get(o.get("url") or "") or {}
+        reason = None
+        if not o.get("closing_date") and info.get("ok"):
+            read += info.get("chars", 0) >= 200
+            deadline, advertised = parse_date(info.get("deadline") or ""), parse_date(info.get("ad_date") or "")
+            rolling = o.get("rolling") or info.get("rolling")
+            if deadline and deadline < TODAY:
+                reason = "closed on " + deadline.strftime("%d %b %Y")
+            elif deadline:
+                o["closing_date"], o["deadline_source"] = deadline.isoformat(), "ad"
+            elif advertised and (TODAY - advertised).days > 365 and not rolling:
+                reason = "advertised on %s, over a year ago" % advertised.strftime("%d %b %Y")
+            if advertised:
+                o["ad_date"] = advertised.isoformat()
+            if info.get("keywords") and o["match"] in ("notice", "broad"):
+                o["match"], o["matched"] = "mention", info["keywords"]
+        if not reason and not o.get("closing_date") and not o.get("rolling"):
+            years = [int(y) for y in re.findall(r"(?<!\d)(20\d\d)(?!\d)", o["title"] + " " + urllib.parse.unquote(o.get("url") or ""))]
+            if years and max(years) <= TODAY.year - 2:
+                reason = "dated %d" % max(years)
+        if reason:
+            hidden.append(dict(o, hidden_reason=reason))
+        else:
+            shown.append(o)
+    info = "%d ads opened and read for dates · %d hidden as closed or out of date" % (read, len(hidden))
+    if pypdf is None:
+        info += " · PDF ads not read (pypdf is not installed)"
+    return shown, hidden, info
+
+
 # ---------- output ----------
 
 MATCH_LABEL = {
@@ -363,7 +506,8 @@ def deadline_text(o):
     if left is None:
         return "Deadline not stated — check the ad"
     when = "today" if left == 0 else "in %d day%s" % (left, "" if left == 1 else "s")
-    return "Closes %s (%s)" % (parse_date(o["closing_date"]).strftime("%d %b %Y"), when)
+    text = "Closes %s (%s)" % (parse_date(o["closing_date"]).strftime("%d %b %Y"), when)
+    return text + (" · date read from the ad" if o.get("deadline_source") == "ad" else "")
 
 
 def render_html(openings, status, new_days):
@@ -382,6 +526,7 @@ def render_html(openings, status, new_days):
             o["rank"],
             "%s post%s" % (o["posts"], "" if o["posts"] == 1 else "s") if o.get("posts") else "",
             o.get("note"),
+            "Advertised " + parse_date(o["ad_date"]).strftime("%d %b %Y") if o.get("ad_date") else "",
         ) if x)
         cards.append(
             '<article class="card %s" data-sector="%s" data-match="%s" data-new="%d" data-soon="%d" data-text="%s">'
@@ -563,6 +708,17 @@ def main():
             openings += kept
             status.append((label, "could not be checked in this run (%s); showing %d from the last successful check" % (exc, len(kept))))
 
+    hidden = []
+    if cfg.get("scan_ads", True):
+        cache = load_json(DATA / "scan_cache.json", {})
+        openings, hidden, info = scan_ads(openings, cfg, matcher, cache)
+        status.append(("Ad check", info))
+        DATA.mkdir(exist_ok=True)
+        (DATA / "scan_cache.json").write_text(json.dumps(cache, indent=1, sort_keys=True), encoding="utf-8")
+        for o in hidden:  # remember them, so they are not announced as new if they reappear
+            seen.setdefault(o["key"], TODAY.isoformat())
+    (DATA / "hidden.json").write_text(json.dumps(hidden, indent=1, ensure_ascii=False), encoding="utf-8")
+
     new_items = []
     for o in openings:
         if o["key"] not in seen:
@@ -589,7 +745,7 @@ def main():
         except Exception as exc:
             print("Email failed: %s" % exc)
     # Some sources block servers outside India, so a partial run is normal there.
-    return 1 if failures and failures == len(status) else 0
+    return 1 if failures and failures == len(sources) else 0
 
 
 if __name__ == "__main__":

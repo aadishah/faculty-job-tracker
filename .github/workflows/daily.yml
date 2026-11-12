@@ -16,6 +16,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - name: Install PDF reader
+        run: pip install --quiet pypdf
       - name: Run tracker
         env:
           SMTP_HOST: ${{ secrets.SMTP_HOST }}

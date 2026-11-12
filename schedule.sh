@@ -28,6 +28,9 @@ install)
     echo "Usage: ./schedule.sh install [local|publish] [HH:MM]"; exit 1
   fi
   command -v python3 >/dev/null || { echo "Python is missing. Run: xcode-select --install"; exit 1; }
+  # pypdf lets the tracker read deadlines inside PDF ads; the tracker still runs without it.
+  python3 -c "import pypdf" 2>/dev/null || python3 -m pip install --user --quiet pypdf 2>/dev/null \
+    || echo "Could not install pypdf; PDF ads will not be read for dates."
 
   # macOS does not let background jobs read Desktop, Documents or Downloads,
   # so a tracker stored there is scheduled from its own copy in the home folder.

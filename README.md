@@ -40,6 +40,19 @@ A posting is kept when it is an open advertisement, is for an Assistant Professo
 Edit `config.json` to change keywords. They are regular expressions, so `sociolog`
 matches both "Sociology" and "Sociological".
 
+### Checking the ad itself
+
+When a listing has no known deadline, the tracker opens the ad (PDF or web page) and reads it:
+
+- A "last date" that has passed, or an ad dated more than a year ago, hides the listing.
+  Hidden listings and the reason are recorded in `data/hidden.json`.
+- A deadline still ahead is shown on the card as "date read from the ad".
+- If the ad names one of her subjects, a general recruitment notice is upgraded to "Mentioned in ad text".
+
+Reading PDFs needs the `pypdf` package (`python3 -m pip install --user pypdf`; `schedule.sh`
+installs it). Scanned-image PDFs have no text and cannot be read, so those listings stay
+marked "Deadline not stated". Each ad is read once and remembered in `data/scan_cache.json`.
+
 ### State watch list
 
 State pages have no common format, so the tracker reads each page's links and keeps
@@ -98,4 +111,5 @@ macOS blocks background jobs from those folders.
 - State coverage is a sample, not every state university. Some sites could not be read
   automatically and are not watched: Maharashtra PSC, Rajasthan PSC, Haryana PSC,
   Kerala PSC, and the universities of Calcutta, Mysore, Rajasthan and Patna.
-- State notices are matched on the link text only; the tracker does not read the PDFs.
+- Dates are read by pattern ("last date …", "on or before …"), so an unusual wording or a
+  later extension notice can be missed. Always open the original ad.
