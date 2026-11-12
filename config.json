@@ -3,11 +3,15 @@
   "strong_keywords": [
     "sociolog",
     "anthropolog",
-    "women'?s stud",
+    "women.?s stud",
     "women stud",
     "gender stud",
     "gender and|gender &",
-    "feminis"
+    "feminis",
+    "समाजशास्त्र",
+    "मानवशास्त्र",
+    "मानव विज्ञान",
+    "महिला अध्ययन"
   ],
   "broad_keywords": [
     "social science",
@@ -16,8 +20,39 @@
   ],
   "exclude_keywords": [],
   "new_badge_days": 7,
+  "watch_expire_days": 120,
   "sources": {
     "whoseuniversity": true,
-    "curec": true
-  }
+    "curec": true,
+    "watch": true
+  },
+  "watch": [
+    {"name": "Bihar State University Service Commission", "state": "Bihar", "url": "https://bsusc.bihar.gov.in/Home/Advertisement"},
+    {"name": "Madhya Pradesh Public Service Commission", "state": "Madhya Pradesh", "url": "https://mppsc.mp.gov.in/Advertisement"},
+    {"name": "Jharkhand Public Service Commission", "state": "Jharkhand", "url": "https://www.jpsc.gov.in/advertisement.php"},
+    {"name": "Chhattisgarh Public Service Commission", "state": "Chhattisgarh", "url": "https://psc.cg.gov.in/Advertisement.php"},
+    {"name": "Uttarakhand Public Service Commission", "state": "Uttarakhand", "url": "https://psc.uk.gov.in/candidate-corner/recruitment"},
+    {"name": "Assam Public Service Commission", "state": "Assam", "url": "https://apsc.nic.in/"},
+    {"name": "UP Education Service Selection Commission", "state": "Uttar Pradesh", "url": "https://www.upessc.up.gov.in/Home/Advertisment"},
+    {"name": "Odisha Public Service Commission", "state": "Odisha", "url": "https://www.opsc.gov.in/"},
+    {"name": "West Bengal College Service Commission", "state": "West Bengal", "url": "https://www.wbcsc.org.in/"},
+    {"name": "Punjab Public Service Commission", "state": "Punjab", "url": "https://ppsc.gov.in/"},
+    {"name": "Tamil Nadu Teachers Recruitment Board", "state": "Tamil Nadu", "url": "https://www.trb.tn.gov.in/"},
+    {"name": "Panjab University", "state": "Chandigarh", "url": "https://jobs.puchd.ac.in/"},
+    {"name": "Cotton University", "state": "Assam", "url": "https://cottonuniversity.ac.in/"},
+    {"name": "Utkal University", "state": "Odisha", "url": "https://utkaluniversity.ac.in/recruitment/"},
+    {"name": "University of Kashmir", "state": "Jammu & Kashmir", "url": "https://www.kashmiruniversity.net/jobs.aspx"},
+    {"name": "Presidency University, Kolkata", "state": "West Bengal", "url": "https://www.presiuniv.ac.in/web/advertisement.php"},
+    {"name": "Jadavpur University", "state": "West Bengal", "url": "https://jadavpuruniversity.in/recruitment/"},
+    {"name": "University of Calicut", "state": "Kerala", "url": "https://www.uoc.ac.in/index.php/info-desk/vacancies"},
+    {"name": "Mahatma Gandhi University, Kerala", "state": "Kerala", "url": "https://www.mgu.ac.in/"},
+    {"name": "University of Kerala", "state": "Kerala", "url": "https://www.keralauniversity.ac.in/jobs"},
+    {"name": "University of Madras", "state": "Tamil Nadu", "url": "https://www.unom.ac.in/"},
+    {"name": "Bangalore University", "state": "Karnataka", "url": "https://bangaloreuniversity.karnataka.gov.in/"},
+    {"name": "Goa University", "state": "Goa", "url": "https://www.unigoa.ac.in/"},
+    {"name": "Gujarat University", "state": "Gujarat", "url": "https://www.gujaratuniversity.ac.in/career"},
+    {"name": "Savitribai Phule Pune University", "state": "Maharashtra", "url": "https://admin.unipune.ac.in/recruitment/"},
+    {"name": "University of Mumbai", "state": "Maharashtra", "url": "https://mu.ac.in/"},
+    {"name": "University of Lucknow", "state": "Uttar Pradesh", "url": "https://www.lkouniv.ac.in/en/page/recruitment"}
+  ]
 }
