@@ -98,6 +98,12 @@ def parse_date(value):
         return None
 
 
+def still_open(opening):
+    """False once a kept-over opening's closing date has passed."""
+    closing = parse_date(opening.get("closing_date") or "")
+    return not closing or closing >= TODAY
+
+
 def clean(fragment):
     """HTML fragment -> plain single-line text."""
     text = html.unescape(re.sub(r"<[^>]+>", " ", fragment))
@@ -293,7 +299,9 @@ def source_watch(matcher, cfg, seen, previous):
         prefix = "watch:%s:" % slug
         if error:
             failed.append(entry["name"])
-            out += [o for k, o in previous.items() if k.startswith(prefix)]
+            limit = cfg.get("watch_expire_days", 120)
+            out += [o for k, o in previous.items() if k.startswith(prefix)
+                    and (TODAY - (parse_date(o.get("first_seen", "")) or TODAY)).days <= limit]
             continue
         first_check = ("baseline:" + slug) not in seen
         for text, url in notices:
@@ -551,9 +559,9 @@ def main():
             status.append((label, "%d shown · %s" % (len(items), info)))
         except Exception as exc:  # keep the last known results for a source that is down
             failures += 1
-            kept = [o for k, o in previous.items() if k.startswith(prefix)]
+            kept = [o for k, o in previous.items() if k.startswith(prefix) and still_open(o)]
             openings += kept
-            status.append((label, "could not be checked today (%s); showing %d from the last run" % (exc, len(kept))))
+            status.append((label, "could not be checked in this run (%s); showing %d from the last successful check" % (exc, len(kept))))
 
     new_items = []
     for o in openings:
@@ -580,8 +588,8 @@ def main():
             print("Email: " + send_email("%d new faculty opening(s)" % len(new_items), digest))
         except Exception as exc:
             print("Email failed: %s" % exc)
-            failures += 1
-    return 1 if failures else 0
+    # Some sources block servers outside India, so a partial run is normal there.
+    return 1 if failures and failures == len(status) else 0
 
 
 if __name__ == "__main__":

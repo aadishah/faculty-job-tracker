@@ -57,6 +57,10 @@ lists, interview schedules, guest-faculty calls and notices that name another su
 this folder is pushed to a GitHub repository.
 
 - **Page:** turn on GitHub Pages for the `docs/` folder to get a link to bookmark.
+- **Sites that only answer from India:** the UGC CU-REC portal and about a third of the
+  state pages refuse connections from GitHub's servers. The daily GitHub run checks
+  everything it can reach and keeps the last known results for the rest. To refresh
+  those, run `./run_local.sh` on a computer in India; it does a full check and publishes it.
 - **Email:** add these repository secrets and a digest is sent whenever something new appears:
   `SMTP_HOST`, `SMTP_PORT` (465), `SMTP_USER`, `SMTP_PASS`, `MAIL_TO`.
   For Gmail, use `smtp.gmail.com` and an app password, not the account password.
