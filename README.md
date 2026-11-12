@@ -65,6 +65,32 @@ this folder is pushed to a GitHub repository.
   `SMTP_HOST`, `SMTP_PORT` (465), `SMTP_USER`, `SMTP_PASS`, `MAIL_TO`.
   For Gmail, use `smtp.gmail.com` and an app password, not the account password.
 
+## Daily run on a Mac
+
+A Mac in India reaches every source, so this is the most complete check.
+
+First time on a new Mac (installs Python and Git, then downloads the tracker):
+
+```bash
+xcode-select --install
+git clone https://github.com/aadishah/faculty-job-tracker.git ~/faculty-job-tracker
+cd ~/faculty-job-tracker
+```
+
+Then schedule it:
+
+```bash
+./schedule.sh install            # results stay on this Mac: open docs/index.html
+./schedule.sh install publish    # also updates the shared web page (needs push access)
+./schedule.sh status             # is it scheduled, and what did the last run say
+./schedule.sh remove             # stop the daily run
+```
+
+It runs at 9:30 am by default; add a time such as `07:30` after the mode to change it.
+If the Mac is asleep then, the check runs when it wakes. A tracker kept in Desktop,
+Documents or Downloads is scheduled from a copy at `~/.faculty-job-tracker`, because
+macOS blocks background jobs from those folders.
+
 ## Limits
 
 - Most ads on Whose University? have no machine-readable deadline; the page says so. Always open the original ad.
