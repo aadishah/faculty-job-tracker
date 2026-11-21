@@ -112,11 +112,11 @@
   "hidden_reason": "closed on 14 Sep 2026"
  },
  {
-  "key": "watch:university-of-calicut:24643af22d09c18d",
+  "key": "watch:university-of-calicut:4825c7cf215a045c",
   "source": "Watch list",
   "sector": "State",
   "institution": "University of Calicut",
-  "title": "Online applications are invited for preparing ranklist for the post of Assistant Professor on contract in Social Science in the Calicut University Teacher Education Centres 23-10-2026",
+  "title": "Online applications are invited for preparing ranklist for the post of Assistant Professor on contract in Social Science in the Calicut University Teacher Education Centres",
   "rank": "Assistant Professor",
   "match": "broad",
   "matched": [
@@ -128,21 +128,5 @@
   "apply_url": null,
   "note": "Kerala",
   "hidden_reason": "closed on 23 Oct 2026"
- },
- {
-  "key": "watch:university-of-mumbai:7251caa5c4fb277c",
-  "source": "Watch list",
-  "sector": "State",
-  "institution": "University of Mumbai",
-  "title": "CORRIGENDUM TO THE ADVERTISEMENT FOR THE VARIOUS 152 AIDED TEACHING POSITIONS - No.AAQA/2026/FEB/25889",
-  "rank": "Faculty (rank not stated)",
-  "match": "notice",
-  "matched": [],
-  "closing_date": null,
-  "posts": null,
-  "url": "https://mu.ac.in/admin/upload/notice/57629CORRIGENDUM.pdf",
-  "apply_url": null,
-  "note": "Maharashtra",
-  "hidden_reason": "closed on 12 Mar 2026"
  }
 ]
