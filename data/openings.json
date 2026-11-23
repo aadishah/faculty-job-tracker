@@ -19,6 +19,25 @@
   "first_seen": "2026-11-12"
  },
  {
+  "key": "wu:dafad2f6164ff538",
+  "source": "Whose University?",
+  "sector": "Central",
+  "institution": "Indian Institute of Technology Delhi",
+  "title": "Faculty — Department of Humanities & Social Sciences",
+  "rank": "Faculty (rank not stated)",
+  "match": "broad",
+  "matched": [
+   "social science"
+  ],
+  "closing_date": "2026-12-31",
+  "posts": null,
+  "url": "https://home.iitd.ac.in/jobs-iitd/uploads/Rollling Advt. IITD 2026- AP-2_w.e.f. 17.11.2026.pdf",
+  "apply_url": "https://ecampus.iitd.ac.in/IITDFR-0/login",
+  "note": "Delhi",
+  "rolling": false,
+  "first_seen": "2026-11-23"
+ },
+ {
   "key": "wu:a54d8488871bd858",
   "source": "Whose University?",
   "sector": "Central",
